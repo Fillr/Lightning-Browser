@@ -12,6 +12,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenLocal()
+
         mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }

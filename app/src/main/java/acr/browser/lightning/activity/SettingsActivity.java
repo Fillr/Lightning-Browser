@@ -3,6 +3,7 @@
  */
 package acr.browser.lightning.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.anthonycr.grant.PermissionsManager;
+import com.fillr.profile.FEMainActivity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -66,6 +68,15 @@ public class SettingsActivity extends ThemableSettingsActivity {
             }
         }
     }
+
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        super.onHeaderClick(header, position);
+        if (header.id == R.id.autofillSettings) {
+            startActivity(new Intent(this, FEMainActivity.class));
+        }
+    }
+
 
     @Override
     protected boolean isValidFragment(String fragmentName) {

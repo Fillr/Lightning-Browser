@@ -3,6 +3,13 @@
     <header
         android:fragment="acr.browser.lightning.fragment.GeneralSettingsFragment"
         android:title="@string/settings_general"/>
+
+    <header
+        android:id="@+id/autofillSettings"
+        android:title="Autofill Settings"
+        android:key="autofillsettings"
+        android:summary="" />
+
     <header
         android:fragment="acr.browser.lightning.fragment.BookmarkSettingsFragment"
         android:title="@string/bookmark_settings"/>
