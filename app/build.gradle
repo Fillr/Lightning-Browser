@@ -24,13 +24,13 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            proguardFiles 'proguard-project.txt'
+            //proguardFiles 'proguard-project.txt'
         }
 
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles 'proguard-project.txt'
+            //proguardFiles 'proguard-project.txt'
         }
     }
 
