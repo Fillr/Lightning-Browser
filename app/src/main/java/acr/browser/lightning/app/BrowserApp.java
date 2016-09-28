@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -40,13 +41,13 @@ public class BrowserApp extends Application {
         super.onCreate();
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build());
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build());
+                    .detectAll()
+                    .penaltyLog()
+                    .build());
         }
 
         final Thread.UncaughtExceptionHandler defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -122,6 +123,12 @@ public class BrowserApp extends Application {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("URL", string);
         clipboard.setPrimaryClip(clip);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
 }

@@ -4,13 +4,15 @@ apply plugin: 'com.getkeepsafe.dexcount'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 24
         versionName "4.3.3"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
     }
 
     sourceSets {
@@ -47,11 +49,16 @@ android {
     }
 
     lintOptions {
-        abortOnError true
+        abortOnError false
     }
 
     packagingOptions {
         exclude '.readme'
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -64,6 +71,9 @@ dexcount {
 }
 
 dependencies {
+
+    compile (name: 'fillrcore-fillrembedded-release', ext:'aar')
+    compile (name: 'fillr-browser-sdk', ext:'aar')
 
     // support libraries
     compile 'com.android.support:palette-v7:24.2.1'
@@ -96,10 +106,12 @@ dependencies {
     // git submodule foreach git reset --hard
     // git submodule update --remote
     compile project(':libnetcipher')
-
     compile project(':bonsai')
-
     compile project(':animated-progress-bar')
+
+    // memory leak analysis
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
 
     //fillr
     compile "com.android.support:support-v4:24.2.1"
@@ -121,9 +133,4 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
-
-
-    // memory leak analysis
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
 }
