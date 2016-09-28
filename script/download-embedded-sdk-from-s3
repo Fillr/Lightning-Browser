@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -x
+
+AWS=/usr/local/bin/aws
+SOURCE=s3://fillr/sdk/android/v2
+ARTEFACT="FillrEmbeddedSDK.zip"
+
+cd $WORKSPACE/app/libs/
+$AWS s3 cp "$SOURCE/$ARTEFACT" .
+rm -rf *.aar
+unzip $ARTEFACT
+mv FillrEmbeddedSDK-release.aar fillrcore-fillrembedded-release.aar
+mv FillrSDK-release.aar fillr-browser-sdk.aar
+rm -rf *.zip
+cd $WORKSPACE

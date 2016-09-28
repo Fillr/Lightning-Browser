@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -x
+
+AWS=/usr/local/bin/aws
+DESTINATION=s3://fillr/sdk/android/v1
+ARTEFACT="FillrSDK.zip"
+
+$AWS s3 cp "$DESTINATION/$ARTEFACT" .
+rm -rf FillrSDK/
+unzip $ARTEFACT
