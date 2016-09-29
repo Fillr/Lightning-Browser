@@ -18,7 +18,7 @@ APP_DATA_ENDPOINT="apps/$APP_ID.json"
 APP_ENDPOINT="apps/$APP_ID"
 
 
-APP="./app/build/outputs/apk/app-debug.apk"
+APP="./app/build/outputs/apk/app-lightningPlus-debug.apk"
 NOTES_FILE="./deploy/release-notes.txt"
 
 TESTERS="$DEVS"
