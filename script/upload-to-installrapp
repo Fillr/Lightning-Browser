@@ -19,6 +19,11 @@ APP_ENDPOINT="apps/$APP_ID"
 
 
 APP="./app/build/outputs/apk/app-lightningPlus-debug.apk"
+
+if (($CI == 1)); then
+  APP="/tmp/app-lightningPlus-debug.apk"
+fi
+
 NOTES_FILE="./deploy/release-notes.txt"
 
 TESTERS="$DEVS"
