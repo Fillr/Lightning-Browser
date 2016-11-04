@@ -2,7 +2,7 @@
 
 set -x
 
-CURL="/usr/bin/curl"
+CURL="/usr/bin/curl --silent"
 JQ="/usr/local/bin/jq"
 
 /usr/local/bin/aws s3 cp s3://fillr/sdk/details.sh .
