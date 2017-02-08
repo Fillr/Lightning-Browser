@@ -13,6 +13,7 @@ android {
         targetSdkVersion 23
         versionName "4.3.3"
         generatedDensities = []
+        multiDexEnabled true
     }
 
     aaptOptions {
@@ -77,6 +78,7 @@ dependencies {
     //if it does not resolve the browser-sdk you may need to add this line as well.
     //compile 'com.fillr:fillr-browser-sdk:2.4.5'
     compile(group: 'com.fillr', name: 'fillr-browser-sdk', version: '2.4.5', ext: 'aar', classifier: 'fillrBrowserSdkPlusRelease')
+    compile 'com.android.support:multidex:1.0.1'
 
     // support libraries
     compile 'com.android.support:palette-v7:23.3.0'

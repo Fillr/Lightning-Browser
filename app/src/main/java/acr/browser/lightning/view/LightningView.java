@@ -32,6 +32,7 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 
+import com.fillr.browsersdk.Fillr;
 import com.squareup.otto.Bus;
 
 import java.io.File;
@@ -148,6 +149,7 @@ public class LightningView {
         sDefaultUserAgent = mWebView.getSettings().getUserAgentString();
         initializeSettings();
         initializePreferences(activity);
+        Fillr.getInstance().trackWebView(mWebView);
 
         if (url != null) {
             if (!url.trim().isEmpty()) {

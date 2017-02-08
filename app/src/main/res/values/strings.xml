@@ -237,4 +237,9 @@
 
     <string name="faq">FAQ</string>
     <string name="faq_description">Frequently Asked Questions</string>
+
+    <string name="com_fillr_dropbox_key">yourdropboxkey</string>
+    <string name="com_fillr_dropbox_secret">yourdropboxsecret</string>
+    <string name="com_fillr_dropbox_scheme">db-yourdropboxkey</string>
+
 </resources>

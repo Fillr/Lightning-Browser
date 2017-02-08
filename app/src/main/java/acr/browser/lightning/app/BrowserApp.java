@@ -4,8 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.multidex.MultiDexApplication;
 import android.webkit.WebView;
 
+import com.fillr.FillrApplication;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.otto.Bus;
 
@@ -16,7 +18,7 @@ import javax.inject.Inject;
 
 import acr.browser.lightning.BuildConfig;
 
-public class BrowserApp extends Application {
+public class BrowserApp extends MultiDexApplication {
 
     private static AppComponent mAppComponent;
     private static final Executor mIOThread = Executors.newSingleThreadExecutor();
@@ -33,6 +35,9 @@ public class BrowserApp extends Application {
         if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+
+        //FillrApplication init = FillrApplication.getPopApplication(this);
+        //init.init();
     }
 
     @NonNull

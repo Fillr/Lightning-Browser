@@ -128,6 +128,10 @@ import acr.browser.lightning.view.LightningView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import com.fillr.browsersdk.Fillr;
+import com.fillr.browsersdk.Fillr.BROWSER_TYPE;
+import com.fillr.browsersdk.model.FillrBrowserProperties;
+
 public abstract class BrowserActivity extends ThemableBrowserActivity implements BrowserView, UIController, OnClickListener, OnLongClickListener {
 
     private static final String TAG = BrowserActivity.class.getSimpleName();
@@ -265,6 +269,16 @@ public abstract class BrowserActivity extends ThemableBrowserActivity implements
                 }
             }
         });
+
+        // The Fillr SDK needs to be set up before any web views are displayed
+        // an onCreate of your main browser activity might be a good place to initialise the Fillr SDK
+        Fillr fillr = Fillr.getInstance();
+
+        // Fillr browser properties allow the Fillr views to be branded to match your browser
+        FillrBrowserProperties fillrBrowserProperties = new FillrBrowserProperties("Lightning Browser", "Lightning");
+
+        // Initialise only needs to be called once per application session, but it *must* be called before you call Fillr.trackWebView()
+        fillr.initialise("06c39ea3972285cdbd19f4b649024b8f", "ZGNiNjkxZjE0ODFhZTcxMDI3NmY3ZWQ=", this, BROWSER_TYPE.WEB_KIT, fillrBrowserProperties);
     }
 
     private synchronized void initialize(Bundle savedInstanceState) {
@@ -1241,6 +1255,8 @@ public abstract class BrowserActivity extends ThemableBrowserActivity implements
         BrowserApp.get(this).registerReceiver(mNetworkReceiver, filter);
 
         mEventBus.register(mBusEventListener);
+
+        Fillr.getInstance().onResume();
     }
 
     /**
@@ -1601,6 +1617,14 @@ public abstract class BrowserActivity extends ThemableBrowserActivity implements
 
         mFilePathCallback.onReceiveValue(results);
         mFilePathCallback = null;
+
+        if (requestCode == Fillr.FILLR_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Fillr.getInstance().processForm(intent);
+            } else {
+                // Handle a cancelled/aborted Fillr activity
+            }
+        }
     }
 
     @Override
@@ -1972,11 +1996,10 @@ public abstract class BrowserActivity extends ThemableBrowserActivity implements
 
         if (mFullScreen) {
             int height = mRoot.getHeight() - mUiLayout.getTop();
-            mBrowserFrame.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+            //mBrowserFrame.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, height));
         } else {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            params.weight = 1;
-            mBrowserFrame.setLayoutParams(params);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            //mBrowserFrame.setLayoutParams(params);
         }
 
         mBrowserFrame.requestLayout();
@@ -1990,7 +2013,7 @@ public abstract class BrowserActivity extends ThemableBrowserActivity implements
                 mRoot.getWindowVisibleDisplayFrame(rect);
 
                 int height = rect.bottom - mUiLayout.getTop();
-                mBrowserFrame.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, height));
+                //mBrowserFrame.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, height));
                 mBrowserFrame.requestLayout();
             }
         });
